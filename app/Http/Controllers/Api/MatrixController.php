@@ -35,12 +35,15 @@ class MatrixController extends Controller
                     ];
                 }
             }
-
-            $matrix->randomized_matrix = $randomized_matrix;
+            $data = (Object) [
+                'length' => $matrix->length,
+                'height' => $matrix->height,
+                'randomized_matrix' => $randomized_matrix
+            ];
             
             return response()->json([
                 'message' => 'Data Berhasil Ditemukan',
-                'data' => $matrix
+                'data' => $data
             ]);
         } catch (\Throwable $th) {
             return response()->json([
