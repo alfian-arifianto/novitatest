@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Api\MatrixController;
+use App\Http\Controllers\MatrixController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,7 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::prefix('matrix')->group(function() {
     Route::get('/', [MatrixController::class, 'data'])->name('api.matrix.data');
     Route::get('{id?}', [MatrixController::class, 'detail'])->name('api.matrix.detail');
-    Route::post('/', [MatrixController::class, 'creating'])->name('api.matrix.creating');
-    Route::put('{id}', [MatrixController::class, 'updating'])->name('api.matrix.updating');
-    Route::delete('{id}', [MatrixController::class, 'deleting'])->name('api.matrix.deleting');
+    Route::post('/', [MatrixController::class, 'store'])->name('api.matrix.store');
+    Route::put('{id}', [MatrixController::class, 'update'])->name('api.matrix.update');
+    Route::delete('{id}', [MatrixController::class, 'destroy'])->name('api.matrix.destroy');
 });

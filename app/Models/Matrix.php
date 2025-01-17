@@ -12,11 +12,9 @@ class Matrix extends Model
     protected $fillable = [
         'length',
         'height',
-        'combination'
     ];
     protected $hidden = [
         'created_at',
         'updated_at',
-        'combination',
     ];
 }

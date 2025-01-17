@@ -11,6 +11,46 @@ class MatrixController extends Controller
         $matrices = Matrix::all();
         return view('matrix.index', compact('matrices'));
     }
+    public function data(Request $request) {
+        $perpage = $request->perpage ?? 5;
+        $matrices = Matrix::orderBy('updated_at', 'DESC')->simplePaginate($perpage);
+        return response()
+            ->json(['message' => 'Data Ditemukan', $matrices])
+            ->withCallback($request->input('callback'));
+    }
+    public function detail(Request $request, $id) {
+        try {
+            $matrix = Matrix::where('id', $id)->first();
+            if(!$matrix) {
+                return response()->json([
+                    'message' => 'Data Tidak Ditemukan',
+                    'data' => null
+                ], 400);
+            }
+
+            $randomized_matrix = [];
+            for ($length=0; $length < $matrix->length; $length++) {
+                for ($height=0; $height < $matrix->height; $height++) {
+                    $randomized_matrix[] = (Object) [
+                        'x' => $length+1,
+                        'y' => $height+1,
+                        'value' => rand(1, 99)
+                    ];
+                }
+            }
+            $matrix->randomized_matrix = $randomized_matrix;
+            
+            return response()->json([
+                'message' => 'Data Berhasil Ditemukan',
+                'data' => $matrix
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => 'Data Tidak Ditemukan',
+                'data' => $request->all()
+            ], 400);
+        }
+    }
     public function show(Request $request, $id) {
         $matrix = Matrix::where('id', $id)->first();
         return view('matrix.show', compact('matrix'));
@@ -20,23 +60,17 @@ class MatrixController extends Controller
     }
     public function store(Request $request) {
         try {
-            $combination = $request->length.'|'.$request->height;
-            $check = Matrix::where('combination', $combination)->first();
-            if($check) {
-                alert()->error('Peringatan', 'Nilai Panjang dan Tinggi Sudah Ada');
-                return redirect()->back();
-            }
-
             Matrix::create([
                 'length' => $request->length,
-                'height' => $request->height,
-                'combination' => $combination
+                'height' => $request->height
             ]);
-            alert()->success('Pemberitahuan','Berhasil Simpan Data');
-            return redirect()->back();
+            return response()
+                ->json(['message' => 'Data Berhasil Disimpan', 'data' => $request->all()])
+                ->withCallback($request->input('callback'));
         } catch (\Throwable $th) {
-            alert()->error('Peringatan','Gagal Simpan Data');
-            return redirect()->back();
+            return response()
+                ->json(['message' => 'Data Gagal Disimpan', 'data' => $request->all()], 400)
+                ->withCallback($request->input('callback'));
         }
     }
     public function edit(Request $request, $id) {
@@ -45,38 +79,36 @@ class MatrixController extends Controller
     }
     public function update(Request $request, $id) {
         try {
-            $combination = $request->length.'|'.$request->height;
-            $check = Matrix::where('combination', $combination)->first();
-            if($check) {
-                alert()->error('Peringatan', 'Nilai Panjang dan Tinggi Sudah Ada');
-                return redirect()->back();
-            }
-
             Matrix::where('id', $id)->update([
                 'length' => $request->length,
-                'height' => $request->height,
-                'combination' => $combination
+                'height' => $request->height
             ]);
-            alert()->success('Pemberitahuan', 'Berhasil Simpan Data');
-            return redirect()->back();
+            return response()
+                ->json(['message' => 'Data Berhasil Disimpan', 'data' => $request->all()])
+                ->withCallback($request->input('callback'));
         } catch (\Throwable $th) {
-            alert()->error('Peringatan','Gagal Simpan Data');
-            return redirect()->back();
+            return response()
+                ->json(['message' => 'Data Gagal Disimpan', 'data' => $request->all()], 400)
+                ->withCallback($request->input('callback'));
         }
     }
     public function destroy(Request $request, $id) {
         try {
             $check = Matrix::where('id', $id)->first();
             if(!$check) {
-                alert()->error('Peringatan','Data Tidak Ditemukan');
-                return redirect()->back();
+                return response()->json([
+                    'message' => 'Data Tidak Ditemukan',
+                    'data' => $request->all()
+                ], 400);
             }
             Matrix::where('id', $id)->delete();
-            alert()->success('Pemberitahuan', 'Berhasil Hapus Data');
-            return redirect()->back();
+            return response()
+                ->json(['message' => 'Data Berhasil Dihapus', 'data' => null])
+                ->withCallback($request->input('callback'));
         } catch (\Throwable $th) {
-            alert()->error('Peringatan','Gagal Hapus Data');
-            return redirect()->back();
+            return response()
+                ->json(['message' => 'Data Gagal Dihapus', 'data' => null], 400)
+                ->withCallback($request->input('callback'));
         }
     }
 }

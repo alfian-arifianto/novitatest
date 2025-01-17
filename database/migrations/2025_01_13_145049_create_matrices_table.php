@@ -17,7 +17,7 @@ class CreateMatricesTable extends Migration
             $table->id();
             $table->integer('length')->default(1);
             $table->integer('height')->default(1);
-            $table->string('combination')->default('1|1')->comment('length|height')->unique();
+            $table->unique(['length', 'height']);
             $table->timestamps();
         });
     }

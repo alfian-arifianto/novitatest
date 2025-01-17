@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="AlfianArifianto">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Index</title>
     <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/buttons/">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
@@ -170,6 +171,33 @@
     <script src="{{ asset('assets/dist/js/bootstrap.bundle.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script>
+      let modalEmpty = `<div class="modal-header">
+              <h5 class="modal-title" id="matrixModalLabel">Tambah Matrix</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>`;
+      function swalError(msg) {
+        Swal.fire({
+          title: "Error!",
+          text: msg,
+          allowOutsideClick: false,
+          icon: "error"
+        });
+      }
+      function swalWarning(msg) {
+        Swal.fire({
+          title: "Warning!",
+          text: msg,
+          allowOutsideClick: false,
+          icon: "warning"
+        });
+      }
+    </script>
     @stack('script')
     </body>
 </html>

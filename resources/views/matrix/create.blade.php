@@ -1,5 +1,4 @@
-
-<form method="POST" class="form" action="{{ route('matrix.store') }}">
+<form method="POST" class="form" id="matrix-create">
     <div class="modal-header">
       <h5 class="modal-title" id="matrixModalLabel">Tambah Matrix</h5>
       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -18,6 +17,6 @@
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-      <button type="submit" class="btn btn-primary">Simpan</button>
+      <button type="button" id="matrix-create-save" class="btn btn-primary" onclick="saveMatrixCreate()">Simpan</button>
     </div>
 </form>
