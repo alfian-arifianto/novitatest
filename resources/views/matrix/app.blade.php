@@ -11,7 +11,7 @@
     <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/buttons/">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
     <link href="{{ asset('assets/dist/css/bootstrap.min.css') }}" rel="stylesheet">
-
+    @stack('style')
     <style>
       .bd-placeholder-img {
         font-size: 1.125rem;
@@ -171,6 +171,7 @@
     <script src="{{ asset('assets/dist/js/bootstrap.bundle.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script>
       let modalEmpty = `<div class="modal-header">
               <h5 class="modal-title" id="matrixModalLabel">Tambah Matrix</h5>

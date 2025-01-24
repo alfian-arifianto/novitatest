@@ -14,14 +14,17 @@ class MatrixSeeder extends Seeder
      */
     public function run()
     {
-        for ($i=0; $i < 12; $i++) {
+        for ($i=0; $i < 30; $i++) {
             $rand_length = rand(1, 20);
             $rand_height = rand(1, 20);
 
-            Matrix::create([
-                'length' => $rand_length,
-                'height' => $rand_height
-            ]);
+            $check = Matrix::where('length', $rand_length)->where('height', $rand_height)->first();
+            if(!$check) {
+                Matrix::create([
+                    'length' => $rand_length,
+                    'height' => $rand_height
+                ]);
+            }
         }
     }
 }

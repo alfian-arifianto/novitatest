@@ -4,13 +4,13 @@
   <h2>Data Matrix</h2>
   <div>
     <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary create-matrix" data-bs-toggle="modal" data-bs-target="#matrixModal">
+    <button type="button" class="btn btn-primary create-matrix" onclick="matrixClick('/matrix/create')" data-bs-toggle="modal" data-bs-target="#matrixModal">
       Create
     </button>
   </div>
 </div>
 <div class="table-responsive mt-4">
-  <table class="table table-bordered table-sm">
+  <table class="table table-bordered table-sm display" id="matrix-table" style="width:100%">
     <thead>
       <tr>
         <th class="bg-secondary text-white">No</th>
@@ -19,7 +19,7 @@
         <th class="bg-secondary text-white">Aksi</th>
       </tr>
     </thead>
-    <tbody>
+    {{-- <tbody>
       @foreach ($matrices as $_matrix => $matrix)
         <tr>
           <td style="width: 50px;">{{ $_matrix+1 }}</td>
@@ -47,7 +47,7 @@
           </td>
         </tr>
       @endforeach
-    </tbody>
+    </tbody> --}}
   </table>
 </div>
 
@@ -60,6 +60,11 @@
 </div>
 
 @endsection
+@push('style')
+  <link href="https://cdn.datatables.net/2.2.1/css/dataTables.dataTables.css" rel="stylesheet">
+@endpush
 @push('script')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
+<script src="https://cdn.datatables.net/2.2.1/js/dataTables.js"></script>
 <script src="{{ asset('assets/pages/matrix/indexMatrix.js') }}"></script>
 @endpush

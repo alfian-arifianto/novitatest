@@ -20,7 +20,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::prefix('matrix')->group(function() {
-    Route::get('/', [MatrixController::class, 'data'])->name('api.matrix.data');
+    Route::post('/data', [MatrixController::class, 'data'])->name('api.matrix.data');
     Route::get('{id?}', [MatrixController::class, 'detail'])->name('api.matrix.detail');
     Route::post('/', [MatrixController::class, 'store'])->name('api.matrix.store');
     Route::put('{id}', [MatrixController::class, 'update'])->name('api.matrix.update');
